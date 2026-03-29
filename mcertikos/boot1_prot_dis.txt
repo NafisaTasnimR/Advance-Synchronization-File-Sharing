@@ -1,0 +1,17 @@
+00007ea3 <protcseg>:
+    7ea3:	66 b8 10 00          	mov    $0x10,%ax
+    7ea7:	8e d8                	mov    %eax,%ds
+    7ea9:	8e c0                	mov    %eax,%es
+    7eab:	8e e0                	mov    %eax,%fs
+    7ead:	8e e8                	mov    %eax,%gs
+    7eaf:	8e d0                	mov    %eax,%ss
+    7eb1:	68 8a 7f 00 00       	push   $0x7f8a
+    7eb6:	68 00 7c 00 00       	push   $0x7c00
+    7ebb:	a1 fc 7b 00 00       	mov    0x7bfc,%eax
+    7ec0:	50                   	push   %eax
+    7ec1:	e8 c6 10 00 00       	call   8f8c <boot1main>
+
+00007ec6 <spin>:
+    7ec6:	f4                   	hlt
+
+00007ec7 <putstr>:

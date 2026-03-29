@@ -1,0 +1,32 @@
+All targets of boot loader are done.
+All targets of kernel are done.
+All targets of lib are done.
+All targets of user are done.
+131040+0 records in
+131040+0 records out
+67092480 bytes (67 MB, 64 MiB) copied, 0.546997 s, 123 MB/s
+0+1 records in
+0+1 records out
+131 bytes copied, 0.000482271 s, 272 kB/s
+11+1 records in
+11+1 records out
+6112 bytes (6.1 kB, 6.0 KiB) copied, 0.000219545 s, 27.8 MB/s
+1385+1 records in
+1385+1 records out
+709620 bytes (710 kB, 693 KiB) copied, 0.00989833 s, 71.7 MB/s
+[95mBuilding Certikos Image...[0m
+[95m
+creating disk...[0m
+[92mdone.[0m
+[95m
+writing mbr...[0m
+[92mdone.[0m
+[95m
+copying kernel files...[0m
+[94mkernel starts at sector 2048[0m
+[92m[1m
+All done.[0m
+***
+*** Use Ctrl-a x to exit qemu
+***
+make: *** [Makefile:127: qemu-nox] Terminated

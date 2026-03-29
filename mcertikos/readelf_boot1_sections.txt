@@ -1,0 +1,28 @@
+There are 19 section headers, starting at offset 0x45d8:
+
+Section Headers:
+  [Nr] Name              Type            Addr     Off    Size   ES Flg Lk Inf Al
+  [ 0]                   NULL            00000000 000000 000000 00      0   0  0
+  [ 1] .text             PROGBITS        00007e00 000080 00125a 00 WAX  0   0  4
+  [ 2] .rodata           PROGBITS        0000905a 0012da 0000ed 01 AMS  0   0  1
+  [ 3] .eh_frame         PROGBITS        00009148 0013c8 0002cc 00   A  0   0  4
+  [ 4] .got.plt          PROGBITS        00009414 001694 00000c 04  WA  0   0  4
+  [ 5] .data             PROGBITS        00009420 0016a0 0000a0 00  WA  0   0 32
+  [ 6] .bss              NOBITS          000094c0 001740 00002c 00  WA  0   0 32
+  [ 7] .comment          PROGBITS        00000000 001740 00002b 01  MS  0   0  1
+  [ 8] .debug_aranges    PROGBITS        00000000 001770 000080 00      0   0  8
+  [ 9] .debug_info       PROGBITS        00000000 0017f0 000f6e 00      0   0  1
+  [10] .debug_abbrev     PROGBITS        00000000 00275e 000483 00      0   0  1
+  [11] .debug_line       PROGBITS        00000000 002be1 0006b5 00      0   0  1
+  [12] .debug_str        PROGBITS        00000000 003296 000510 01  MS  0   0  1
+  [13] .debug_line_str   PROGBITS        00000000 0037a6 00008d 01  MS  0   0  1
+  [14] .debug_loclists   PROGBITS        00000000 003833 00054b 00      0   0  1
+  [15] .debug_rnglists   PROGBITS        00000000 003d7e 000062 00      0   0  1
+  [16] .symtab           SYMTAB          00000000 003de0 000490 10     17  44  4
+  [17] .strtab           STRTAB          00000000 004270 0002a7 00      0   0  1
+  [18] .shstrtab         STRTAB          00000000 004517 0000c0 00      0   0  1
+Key to Flags:
+  W (write), A (alloc), X (execute), M (merge), S (strings), I (info),
+  L (link order), O (extra OS processing required), G (group), T (TLS),
+  C (compressed), x (unknown), o (OS specific), E (exclude),
+  D (mbind), p (processor specific)

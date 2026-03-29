@@ -1,0 +1,2 @@
+]633;E;ls --color=auto -l obj/kern/dev/console.o;2fcd7514-9e0d-47e7-9c0e-f0e5750f34dc]633;C-rw-rw-r-- 1 mcertikos mcertikos 10648 Mar  7 20:56 obj/kern/dev/console.o
+[kern] cons_init: begin

@@ -1,0 +1,220 @@
+
+obj/boot/boot1.elf:     file format elf32-i386
+
+
+Disassembly of section .text:
+
+00007e00 <start>:
+    7e00:	fa                   	cli
+    7e01:	fc                   	cld
+    7e02:	31 c0                	xor    %ax,%ax
+    7e04:	8e d8                	mov    %ax,%ds
+    7e06:	8e c0                	mov    %ax,%es
+    7e08:	8e d0                	mov    %ax,%ss
+    7e0a:	bd fc 7b             	mov    $0x7bfc,%bp
+    7e0d:	bc fc 7b             	mov    $0x7bfc,%sp
+
+00007e10 <seta20.1>:
+    7e10:	e4 64                	in     $0x64,%al
+    7e12:	a8 02                	test   $0x2,%al
+    7e14:	75 fa                	jne    7e10 <seta20.1>
+    7e16:	b0 d1                	mov    $0xd1,%al
+    7e18:	e6 64                	out    %al,$0x64
+
+00007e1a <seta20.2>:
+    7e1a:	e4 64                	in     $0x64,%al
+    7e1c:	a8 02                	test   $0x2,%al
+    7e1e:	75 fa                	jne    7e1a <seta20.2>
+    7e20:	b0 df                	mov    $0xdf,%al
+    7e22:	e6 60                	out    %al,$0x60
+
+00007e24 <set_video_mode.2>:
+    7e24:	be d5 7e             	mov    $0x7ed5,%si
+    7e27:	e8 9d 00             	call   7ec7 <putstr>
+    7e2a:	be e7 7e             	mov    $0x7ee7,%si
+    7e2d:	e8 97 00             	call   7ec7 <putstr>
+
+00007e30 <e820>:
+    7e30:	31 c0                	xor    %ax,%ax
+    7e32:	8e d8                	mov    %ax,%ds
+    7e34:	8e c0                	mov    %ax,%es
+    7e36:	66 31 db             	xor    %ebx,%ebx
+    7e39:	66 ba 50 41 4d 53    	mov    $0x534d4150,%edx
+    7e3f:	bf 8e 7f             	mov    $0x7f8e,%di
+
+00007e42 <e820.1>:
+    7e42:	66 b9 14 00 00 00    	mov    $0x14,%ecx
+    7e48:	66 b8 20 e8 00 00    	mov    $0xe820,%eax
+    7e4e:	cd 15                	int    $0x15
+
+00007e50 <e820.2>:
+    7e50:	72 2a                	jb     7e7c <e820.fail>
+    7e52:	66 3d 50 41 4d 53    	cmp    $0x534d4150,%eax
+    7e58:	75 22                	jne    7e7c <e820.fail>
+
+00007e5a <e820.3>:
+    7e5a:	66 c7 45 fc 14 00 00 	movl   $0x14,-0x4(%di)
+    7e61:	00 
+    7e62:	83 c7 18             	add    $0x18,%di
+    7e65:	66 83 fb 00          	cmp    $0x0,%ebx
+    7e69:	74 02                	je     7e6d <e820.4>
+    7e6b:	eb d5                	jmp    7e42 <e820.1>
+
+00007e6d <e820.4>:
+    7e6d:	30 c0                	xor    %al,%al
+    7e6f:	b9 14 00             	mov    $0x14,%cx
+    7e72:	f3 aa                	rep stos %al,%es:(%di)
+    7e74:	be f1 7e             	mov    $0x7ef1,%si
+    7e77:	e8 4d 00             	call   7ec7 <putstr>
+    7e7a:	eb 09                	jmp    7e85 <switch_prot>
+
+00007e7c <e820.fail>:
+    7e7c:	be 1f 7f             	mov    $0x7f1f,%si
+    7e7f:	e8 45 00             	call   7ec7 <putstr>
+    7e82:	eb 00                	jmp    7e84 <spin16>
+
+00007e84 <spin16>:
+    7e84:	f4                   	hlt
+
+00007e85 <switch_prot>:
+    7e85:	be fe 7e             	mov    $0x7efe,%si
+    7e88:	e8 3c 00             	call   7ec7 <putstr>
+    7e8b:	31 c0                	xor    %ax,%ax
+    7e8d:	8e d8                	mov    %ax,%ds
+    7e8f:	0f 01 16 84 7f       	lgdtw  0x7f84
+    7e94:	0f 20 c0             	mov    %cr0,%eax
+    7e97:	66 83 c8 01          	or     $0x1,%eax
+    7e9b:	0f 22 c0             	mov    %eax,%cr0
+    7e9e:	ea a3 7e 08 00       	ljmp   $0x8,$0x7ea3
+
+00007ea3 <protcseg>:
+    7ea3:	66 b8 10 00 8e d8    	mov    $0xd88e0010,%eax
+    7ea9:	8e c0                	mov    %ax,%es
+    7eab:	8e e0                	mov    %ax,%fs
+    7ead:	8e e8                	mov    %ax,%gs
+    7eaf:	8e d0                	mov    %ax,%ss
+    7eb1:	68 8a 7f             	push   $0x7f8a
+    7eb4:	00 00                	add    %al,(%bx,%si)
+    7eb6:	68 00 7c             	push   $0x7c00
+    7eb9:	00 00                	add    %al,(%bx,%si)
+    7ebb:	a1 fc 7b             	mov    0x7bfc,%ax
+    7ebe:	00 00                	add    %al,(%bx,%si)
+    7ec0:	50                   	push   %ax
+    7ec1:	e8 c6 10             	call   8f8a <parse_e820+0x75>
+	...
+
+00007ec6 <spin>:
+    7ec6:	f4                   	hlt
+
+00007ec7 <putstr>:
+    7ec7:	60                   	pusha
+    7ec8:	b4 0e                	mov    $0xe,%ah
+
+00007eca <putstr.1>:
+    7eca:	ac                   	lods   %ds:(%si),%al
+    7ecb:	3c 00                	cmp    $0x0,%al
+    7ecd:	74 04                	je     7ed3 <putstr.2>
+    7ecf:	cd 10                	int    $0x10
+    7ed1:	eb f7                	jmp    7eca <putstr.1>
+
+00007ed3 <putstr.2>:
+    7ed3:	61                   	popa
+    7ed4:	c3                   	ret
+
+00007ed5 <STARTUP_MSG>:
+    7ed5:	53                   	push   %bx
+    7ed6:	74 61                	je     7f39 <E820_FAIL_MSG+0x1a>
+    7ed8:	72 74                	jb     7f4e <NO_BOOTABLE_MSG+0xd>
+    7eda:	20 62 6f             	and    %ah,0x6f(%bp,%si)
+    7edd:	6f                   	outsw  %ds:(%si),(%dx)
+    7ede:	74 31                	je     7f11 <SWITCH_PROT_MSG+0x13>
+    7ee0:	20 2e 2e 2e          	and    %ch,0x2e2e
+    7ee4:	0d 0a 00             	or     $0xa,%ax
+
+00007ee7 <E820_START_MSG>:
+    7ee7:	45                   	inc    %bp
+    7ee8:	38 32                	cmp    %dh,(%bp,%si)
+    7eea:	30 2e 2e 2e          	xor    %ch,0x2e2e
+    7eee:	0d 0a 00             	or     $0xa,%ax
+
+00007ef1 <E820_DONE_MSG>:
+    7ef1:	45                   	inc    %bp
+    7ef2:	38 32                	cmp    %dh,(%bp,%si)
+    7ef4:	30 20                	xor    %ah,(%bx,%si)
+    7ef6:	64 6f                	outsw  %fs:(%si),(%dx)
+    7ef8:	6e                   	outsb  %ds:(%si),(%dx)
+    7ef9:	65 2e 0d 0a 00       	gs cs or $0xa,%ax
+
+00007efe <SWITCH_PROT_MSG>:
+    7efe:	53                   	push   %bx
+    7eff:	77 69                	ja     7f6a <gdt+0xe>
+    7f01:	74 63                	je     7f66 <gdt+0xa>
+    7f03:	68 69 6e             	push   $0x6e69
+    7f06:	67 20 74 6f 20       	and    %dh,0x20(%edi,%ebp,2)
+    7f0b:	70 72                	jo     7f7f <gdt+0x23>
+    7f0d:	6f                   	outsw  %ds:(%si),(%dx)
+    7f0e:	74 65                	je     7f75 <gdt+0x19>
+    7f10:	63 74 65             	arpl   %si,0x65(%si)
+    7f13:	64 20 6d 6f          	and    %ch,%fs:0x6f(%di)
+    7f17:	64 65 2e 2e 2e 0d 0a 	fs gs cs cs cs or $0xa,%ax
+    7f1e:	00 
+
+00007f1f <E820_FAIL_MSG>:
+    7f1f:	65 72 72             	gs jb  7f94 <smap+0xa>
+    7f22:	6f                   	outsw  %ds:(%si),(%dx)
+    7f23:	72 20                	jb     7f45 <NO_BOOTABLE_MSG+0x4>
+    7f25:	77 68                	ja     7f8f <smap+0x5>
+    7f27:	65 6e                	outsb  %gs:(%si),(%dx)
+    7f29:	20 64 65             	and    %ah,0x65(%si)
+    7f2c:	74 65                	je     7f93 <smap+0x9>
+    7f2e:	63 74 69             	arpl   %si,0x69(%si)
+    7f31:	6e                   	outsb  %ds:(%si),(%dx)
+    7f32:	67 20 6d 65          	and    %ch,0x65(%ebp)
+    7f36:	6d                   	insw   (%dx),%es:(%di)
+    7f37:	6f                   	outsw  %ds:(%si),(%dx)
+    7f38:	72 79                	jb     7fb3 <smap+0x29>
+    7f3a:	20 6d 61             	and    %ch,0x61(%di)
+    7f3d:	70 0d                	jo     7f4c <NO_BOOTABLE_MSG+0xb>
+    7f3f:	0a 00                	or     (%bx,%si),%al
+
+00007f41 <NO_BOOTABLE_MSG>:
+    7f41:	4e                   	dec    %si
+    7f42:	6f                   	outsw  %ds:(%si),(%dx)
+    7f43:	20 62 6f             	and    %ah,0x6f(%bp,%si)
+    7f46:	6f                   	outsw  %ds:(%si),(%dx)
+    7f47:	74 61                	je     7faa <smap+0x20>
+    7f49:	62 6c 65             	bound  %bp,0x65(%si)
+    7f4c:	20 70 61             	and    %dh,0x61(%bx,%si)
+    7f4f:	72 74                	jb     7fc5 <smap+0x3b>
+    7f51:	69 74 69 6f 6e       	imul   $0x6e6f,0x69(%si),%si
+    7f56:	2e 0d 0a 00          	cs or  $0xa,%ax
+    7f5a:	90                   	nop
+    7f5b:	90                   	nop
+
+00007f5c <gdt>:
+	...
+    7f64:	ff                   	(bad)
+    7f65:	ff 00                	incw   (%bx,%si)
+    7f67:	00 00                	add    %al,(%bx,%si)
+    7f69:	9a cf 00 ff ff       	lcall  $0xffff,$0xcf
+    7f6e:	00 00                	add    %al,(%bx,%si)
+    7f70:	00 92 cf 00          	add    %dl,0xcf(%bp,%si)
+    7f74:	ff                   	(bad)
+    7f75:	ff 00                	incw   (%bx,%si)
+    7f77:	00 00                	add    %al,(%bx,%si)
+    7f79:	9e                   	sahf
+    7f7a:	00 00                	add    %al,(%bx,%si)
+    7f7c:	ff                   	(bad)
+    7f7d:	ff 00                	incw   (%bx,%si)
+    7f7f:	00 00                	add    %al,(%bx,%si)
+    7f81:	92                   	xchg   %ax,%dx
+	...
+
+00007f84 <gdtdesc>:
+    7f84:	27                   	daa
+    7f85:	00 5c 7f             	add    %bl,0x7f(%si)
+	...
+
+00007f8a <smap>:
+	...
+
