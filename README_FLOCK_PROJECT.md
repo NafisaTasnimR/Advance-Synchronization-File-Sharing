@@ -1,6 +1,5 @@
 # mCertiKOS Advanced Synchronization File Sharing (flock) - Simple Project README
 
-This README explains your project in very simple steps.
 Goal: understand what was implemented and what the 16 tests prove.
 
 ## 1) What this project adds

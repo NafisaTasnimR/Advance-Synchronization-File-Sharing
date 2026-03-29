@@ -1,0 +1,344 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [4 0 R 6 0 R 8 0 R 10 0 R 12 0 R] /Count 5 >>
+endobj
+3 0 obj
+<< /Length 2371 >>
+stream
+BT
+/F1 11 Tf
+1 0 0 1 50 790 Tm (FLOCK Project Report) Tj
+1 0 0 1 50 776 Tm () Tj
+1 0 0 1 50 762 Tm () Tj
+1 0 0 1 50 748 Tm () Tj
+1 0 0 1 50 734 Tm (Course Information) Tj
+1 0 0 1 50 720 Tm () Tj
+1 0 0 1 50 706 Tm (- Course: CSE 4502 Operating System Lab) Tj
+1 0 0 1 50 692 Tm () Tj
+1 0 0 1 50 678 Tm (- Project: File Locking \(FLOCK\) in mCertiKOS) Tj
+1 0 0 1 50 664 Tm () Tj
+1 0 0 1 50 650 Tm (- Date: March 29, 2026) Tj
+1 0 0 1 50 636 Tm () Tj
+1 0 0 1 50 622 Tm () Tj
+1 0 0 1 50 608 Tm () Tj
+1 0 0 1 50 594 Tm (1. Executive Summary) Tj
+1 0 0 1 50 580 Tm () Tj
+1 0 0 1 50 566 Tm (This project implements BSD-style file locking in the mCertiKOS operating system. The) Tj
+1 0 0 1 50 552 Tm (main purpose is to provide safe synchronization when multiple processes access the same) Tj
+1 0 0 1 50 538 Tm (file concurrently. The implementation introduces shared and exclusive lock semantics,) Tj
+1 0 0 1 50 524 Tm (supports blocking and non-blocking behavior, and integrates lock management from) Tj
+1 0 0 1 50 510 Tm (user-space API down to kernel-level inode state.) Tj
+1 0 0 1 50 496 Tm () Tj
+1 0 0 1 50 482 Tm () Tj
+1 0 0 1 50 468 Tm () Tj
+1 0 0 1 50 454 Tm (2. Project Objectives) Tj
+1 0 0 1 50 440 Tm () Tj
+1 0 0 1 50 426 Tm (The key objectives of the project were:) Tj
+1 0 0 1 50 412 Tm () Tj
+1 0 0 1 50 398 Tm () Tj
+1 0 0 1 50 384 Tm () Tj
+1 0 0 1 50 370 Tm (1. Implement file locking semantics compatible with flock behavior.) Tj
+1 0 0 1 50 356 Tm () Tj
+1 0 0 1 50 342 Tm (2. Support read-sharing through shared locks.) Tj
+1 0 0 1 50 328 Tm () Tj
+1 0 0 1 50 314 Tm (3. Ensure exclusive write access through exclusive locks.) Tj
+1 0 0 1 50 300 Tm () Tj
+1 0 0 1 50 286 Tm (4. Provide non-blocking lock acquisition mode.) Tj
+1 0 0 1 50 272 Tm () Tj
+1 0 0 1 50 258 Tm (5. Integrate locking into the kernel file-system path.) Tj
+1 0 0 1 50 244 Tm () Tj
+1 0 0 1 50 230 Tm (6. Validate functionality with comprehensive user-space tests.) Tj
+1 0 0 1 50 216 Tm () Tj
+1 0 0 1 50 202 Tm () Tj
+1 0 0 1 50 188 Tm () Tj
+1 0 0 1 50 174 Tm (3. Locking Model and Semantics) Tj
+1 0 0 1 50 160 Tm () Tj
+1 0 0 1 50 146 Tm (The project supports the following operations:) Tj
+1 0 0 1 50 132 Tm () Tj
+1 0 0 1 50 118 Tm () Tj
+1 0 0 1 50 104 Tm () Tj
+1 0 0 1 50 90 Tm (- LOCK_SH: Acquire a shared lock.) Tj
+1 0 0 1 50 76 Tm () Tj
+1 0 0 1 50 62 Tm (- LOCK_EX: Acquire an exclusive lock.) Tj
+ET
+endstream
+endobj
+4 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 1 0 R >> >> /Contents 3 0 R >>
+endobj
+5 0 obj
+<< /Length 2338 >>
+stream
+BT
+/F1 11 Tf
+1 0 0 1 50 790 Tm (- LOCK_UN: Release a held lock.) Tj
+1 0 0 1 50 776 Tm () Tj
+1 0 0 1 50 762 Tm (- LOCK_NB: Non-blocking modifier for immediate failure on contention.) Tj
+1 0 0 1 50 748 Tm () Tj
+1 0 0 1 50 734 Tm () Tj
+1 0 0 1 50 720 Tm () Tj
+1 0 0 1 50 706 Tm (3.1 Shared Lock) Tj
+1 0 0 1 50 692 Tm () Tj
+1 0 0 1 50 678 Tm (A shared lock allows multiple holders at the same time. This is suitable for concurrent) Tj
+1 0 0 1 50 664 Tm (readers.) Tj
+1 0 0 1 50 650 Tm () Tj
+1 0 0 1 50 636 Tm () Tj
+1 0 0 1 50 622 Tm () Tj
+1 0 0 1 50 608 Tm (3.2 Exclusive Lock) Tj
+1 0 0 1 50 594 Tm () Tj
+1 0 0 1 50 580 Tm (An exclusive lock allows only one holder and blocks all other shared or exclusive) Tj
+1 0 0 1 50 566 Tm (requests.) Tj
+1 0 0 1 50 552 Tm () Tj
+1 0 0 1 50 538 Tm () Tj
+1 0 0 1 50 524 Tm () Tj
+1 0 0 1 50 510 Tm (3.3 Unlock) Tj
+1 0 0 1 50 496 Tm () Tj
+1 0 0 1 50 482 Tm (Unlock releases the lock currently associated with the requesting file descriptor) Tj
+1 0 0 1 50 468 Tm (context.) Tj
+1 0 0 1 50 454 Tm () Tj
+1 0 0 1 50 440 Tm () Tj
+1 0 0 1 50 426 Tm () Tj
+1 0 0 1 50 412 Tm (3.4 Non-Blocking Mode) Tj
+1 0 0 1 50 398 Tm () Tj
+1 0 0 1 50 384 Tm (When LOCK_NB is used, lock acquisition does not wait. If the lock cannot be granted) Tj
+1 0 0 1 50 370 Tm (immediately, the operation returns failure.) Tj
+1 0 0 1 50 356 Tm () Tj
+1 0 0 1 50 342 Tm () Tj
+1 0 0 1 50 328 Tm () Tj
+1 0 0 1 50 314 Tm (4. System Architecture) Tj
+1 0 0 1 50 300 Tm () Tj
+1 0 0 1 50 286 Tm (The design follows a layered syscall pipeline:) Tj
+1 0 0 1 50 272 Tm () Tj
+1 0 0 1 50 258 Tm () Tj
+1 0 0 1 50 244 Tm () Tj
+1 0 0 1 50 230 Tm (1. User application calls flock\(fd, operation\).) Tj
+1 0 0 1 50 216 Tm () Tj
+1 0 0 1 50 202 Tm (2. User syscall wrapper forwards request to kernel trap.) Tj
+1 0 0 1 50 188 Tm () Tj
+1 0 0 1 50 174 Tm (3. Trap dispatcher routes to SYS_flock handler.) Tj
+1 0 0 1 50 160 Tm () Tj
+1 0 0 1 50 146 Tm (4. System call layer validates file descriptor and request.) Tj
+1 0 0 1 50 132 Tm () Tj
+1 0 0 1 50 118 Tm (5. File layer applies descriptor-level lock ownership rules.) Tj
+1 0 0 1 50 104 Tm () Tj
+1 0 0 1 50 90 Tm (6. Core flock engine enforces lock state and contention policy.) Tj
+1 0 0 1 50 76 Tm () Tj
+1 0 0 1 50 62 Tm (7. Inode stores lock state so all descriptors of the same file share one synchronization) Tj
+ET
+endstream
+endobj
+6 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 1 0 R >> >> /Contents 5 0 R >>
+endobj
+7 0 obj
+<< /Length 2295 >>
+stream
+BT
+/F1 11 Tf
+1 0 0 1 50 790 Tm (object.) Tj
+1 0 0 1 50 776 Tm () Tj
+1 0 0 1 50 762 Tm () Tj
+1 0 0 1 50 748 Tm () Tj
+1 0 0 1 50 734 Tm (5. Kernel-Level Design Highlights) Tj
+1 0 0 1 50 720 Tm () Tj
+1 0 0 1 50 706 Tm () Tj
+1 0 0 1 50 692 Tm () Tj
+1 0 0 1 50 678 Tm (5.1 Per-Inode Lock State) Tj
+1 0 0 1 50 664 Tm () Tj
+1 0 0 1 50 650 Tm (Lock state is attached to inode objects, ensuring all opens of the same file coordinate) Tj
+1 0 0 1 50 636 Tm (through one lock state.) Tj
+1 0 0 1 50 622 Tm () Tj
+1 0 0 1 50 608 Tm () Tj
+1 0 0 1 50 594 Tm () Tj
+1 0 0 1 50 580 Tm (5.2 Per-Descriptor Ownership Tracking) Tj
+1 0 0 1 50 566 Tm () Tj
+1 0 0 1 50 552 Tm (Each file descriptor tracks the lock it currently holds. This enables consistent unlock) Tj
+1 0 0 1 50 538 Tm (behavior, upgrade or downgrade handling, and clean resource release on close.) Tj
+1 0 0 1 50 524 Tm () Tj
+1 0 0 1 50 510 Tm () Tj
+1 0 0 1 50 496 Tm () Tj
+1 0 0 1 50 482 Tm (5.3 Automatic Cleanup) Tj
+1 0 0 1 50 468 Tm () Tj
+1 0 0 1 50 454 Tm (If a locked file descriptor is closed, the associated lock is automatically released to) Tj
+1 0 0 1 50 440 Tm (avoid lock leaks.) Tj
+1 0 0 1 50 426 Tm () Tj
+1 0 0 1 50 412 Tm () Tj
+1 0 0 1 50 398 Tm () Tj
+1 0 0 1 50 384 Tm (5.4 Upgrade and Downgrade Support) Tj
+1 0 0 1 50 370 Tm () Tj
+1 0 0 1 50 356 Tm (The implementation supports transitions between shared and exclusive ownership logic) Tj
+1 0 0 1 50 342 Tm (through controlled release and re-acquire paths.) Tj
+1 0 0 1 50 328 Tm () Tj
+1 0 0 1 50 314 Tm () Tj
+1 0 0 1 50 300 Tm () Tj
+1 0 0 1 50 286 Tm (5.5 Writer Priority Strategy) Tj
+1 0 0 1 50 272 Tm () Tj
+1 0 0 1 50 258 Tm (When exclusive waiters exist, new shared lock requests may be delayed to reduce writer) Tj
+1 0 0 1 50 244 Tm (starvation.) Tj
+1 0 0 1 50 230 Tm () Tj
+1 0 0 1 50 216 Tm () Tj
+1 0 0 1 50 202 Tm () Tj
+1 0 0 1 50 188 Tm (6. Implementation Scope) Tj
+1 0 0 1 50 174 Tm () Tj
+1 0 0 1 50 160 Tm (The implementation spans several kernel and user-space components:) Tj
+1 0 0 1 50 146 Tm () Tj
+1 0 0 1 50 132 Tm () Tj
+1 0 0 1 50 118 Tm () Tj
+1 0 0 1 50 104 Tm (- Core flock module for state and lock operations.) Tj
+1 0 0 1 50 90 Tm () Tj
+1 0 0 1 50 76 Tm (- File-system inode and file structures for lock embedding and ownership tracking.) Tj
+1 0 0 1 50 62 Tm () Tj
+ET
+endstream
+endobj
+8 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 1 0 R >> >> /Contents 7 0 R >>
+endobj
+9 0 obj
+<< /Length 2336 >>
+stream
+BT
+/F1 11 Tf
+1 0 0 1 50 790 Tm (- Syscall number registration and trap dispatch wiring.) Tj
+1 0 0 1 50 776 Tm () Tj
+1 0 0 1 50 762 Tm (- System call handler and file lock bridge function.) Tj
+1 0 0 1 50 748 Tm () Tj
+1 0 0 1 50 734 Tm (- User-space headers for flock flags and wrapper interface.) Tj
+1 0 0 1 50 720 Tm () Tj
+1 0 0 1 50 706 Tm (- Dedicated test binaries for single-process and multi-process validation.) Tj
+1 0 0 1 50 692 Tm () Tj
+1 0 0 1 50 678 Tm () Tj
+1 0 0 1 50 664 Tm () Tj
+1 0 0 1 50 650 Tm (7. Testing and Validation) Tj
+1 0 0 1 50 636 Tm () Tj
+1 0 0 1 50 622 Tm (The test suite validates both functional correctness and concurrency behavior,) Tj
+1 0 0 1 50 608 Tm (including:) Tj
+1 0 0 1 50 594 Tm () Tj
+1 0 0 1 50 580 Tm () Tj
+1 0 0 1 50 566 Tm () Tj
+1 0 0 1 50 552 Tm (- Basic shared and exclusive lock acquisition and release.) Tj
+1 0 0 1 50 538 Tm () Tj
+1 0 0 1 50 524 Tm (- Conflict behavior between readers and writers.) Tj
+1 0 0 1 50 510 Tm () Tj
+1 0 0 1 50 496 Tm (- Upgrade and downgrade correctness.) Tj
+1 0 0 1 50 482 Tm () Tj
+1 0 0 1 50 468 Tm (- Non-blocking lock outcomes under contention.) Tj
+1 0 0 1 50 454 Tm () Tj
+1 0 0 1 50 440 Tm (- Automatic unlock on close.) Tj
+1 0 0 1 50 426 Tm () Tj
+1 0 0 1 50 412 Tm (- Invalid file descriptor handling.) Tj
+1 0 0 1 50 398 Tm () Tj
+1 0 0 1 50 384 Tm (- Multi-process contention and release visibility.) Tj
+1 0 0 1 50 370 Tm () Tj
+1 0 0 1 50 356 Tm (- Blocking behavior for lock wait scenarios.) Tj
+1 0 0 1 50 342 Tm () Tj
+1 0 0 1 50 328 Tm () Tj
+1 0 0 1 50 314 Tm () Tj
+1 0 0 1 50 300 Tm (A total of 16 tests were used to verify the behavior across these cases.) Tj
+1 0 0 1 50 286 Tm () Tj
+1 0 0 1 50 272 Tm () Tj
+1 0 0 1 50 258 Tm () Tj
+1 0 0 1 50 244 Tm (8. Challenges and Solutions) Tj
+1 0 0 1 50 230 Tm () Tj
+1 0 0 1 50 216 Tm () Tj
+1 0 0 1 50 202 Tm () Tj
+1 0 0 1 50 188 Tm (8.1 Challenge: Consistent Coordination Across Multiple File Descriptors) Tj
+1 0 0 1 50 174 Tm () Tj
+1 0 0 1 50 160 Tm (Solution: Move lock state to inode level and track descriptor ownership separately.) Tj
+1 0 0 1 50 146 Tm () Tj
+1 0 0 1 50 132 Tm () Tj
+1 0 0 1 50 118 Tm () Tj
+1 0 0 1 50 104 Tm (8.2 Challenge: Avoiding Lock Leaks) Tj
+1 0 0 1 50 90 Tm () Tj
+1 0 0 1 50 76 Tm (Solution: Add auto-release logic during file descriptor close path.) Tj
+1 0 0 1 50 62 Tm () Tj
+ET
+endstream
+endobj
+10 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 1 0 R >> >> /Contents 9 0 R >>
+endobj
+11 0 obj
+<< /Length 2061 >>
+stream
+BT
+/F1 11 Tf
+1 0 0 1 50 790 Tm () Tj
+1 0 0 1 50 776 Tm () Tj
+1 0 0 1 50 762 Tm (8.3 Challenge: Fairness Under Contention) Tj
+1 0 0 1 50 748 Tm () Tj
+1 0 0 1 50 734 Tm (Solution: Introduce writer-priority behavior so writers are not indefinitely starved by) Tj
+1 0 0 1 50 720 Tm (incoming readers.) Tj
+1 0 0 1 50 706 Tm () Tj
+1 0 0 1 50 692 Tm () Tj
+1 0 0 1 50 678 Tm () Tj
+1 0 0 1 50 664 Tm (9. Learning Outcomes) Tj
+1 0 0 1 50 650 Tm () Tj
+1 0 0 1 50 636 Tm (Through this project, the team gained practical understanding of:) Tj
+1 0 0 1 50 622 Tm () Tj
+1 0 0 1 50 608 Tm () Tj
+1 0 0 1 50 594 Tm () Tj
+1 0 0 1 50 580 Tm (- Kernel synchronization primitives and lock state machines.) Tj
+1 0 0 1 50 566 Tm () Tj
+1 0 0 1 50 552 Tm (- Syscall design and user-kernel interface flow.) Tj
+1 0 0 1 50 538 Tm () Tj
+1 0 0 1 50 524 Tm (- File-system integration techniques in a teaching OS.) Tj
+1 0 0 1 50 510 Tm () Tj
+1 0 0 1 50 496 Tm (- Testing concurrent behavior in single and multi-process settings.) Tj
+1 0 0 1 50 482 Tm () Tj
+1 0 0 1 50 468 Tm () Tj
+1 0 0 1 50 454 Tm () Tj
+1 0 0 1 50 440 Tm (10. Conclusion) Tj
+1 0 0 1 50 426 Tm () Tj
+1 0 0 1 50 412 Tm (The FLOCK project successfully integrates robust file locking into mCertiKOS with clear) Tj
+1 0 0 1 50 398 Tm (lock semantics, syscall-level connectivity, and extensive validation coverage. The final) Tj
+1 0 0 1 50 384 Tm (system demonstrates correct behavior for both routine and contended access patterns,) Tj
+1 0 0 1 50 370 Tm (making concurrent file access safer and more predictable.) Tj
+1 0 0 1 50 356 Tm () Tj
+1 0 0 1 50 342 Tm () Tj
+1 0 0 1 50 328 Tm () Tj
+1 0 0 1 50 314 Tm (11. Team Members) Tj
+1 0 0 1 50 300 Tm () Tj
+1 0 0 1 50 286 Tm (- Sanjana Afreen [220042106]) Tj
+1 0 0 1 50 272 Tm () Tj
+1 0 0 1 50 258 Tm (- Nishat Tasneem [220042110]) Tj
+1 0 0 1 50 244 Tm () Tj
+1 0 0 1 50 230 Tm (- Nafisa Tasnim [220042114]) Tj
+1 0 0 1 50 216 Tm () Tj
+1 0 0 1 50 202 Tm (- Nishat Tasnim [220042124]) Tj
+1 0 0 1 50 188 Tm () Tj
+1 0 0 1 50 174 Tm (- Mrittika Jahan [220042150]) Tj
+1 0 0 1 50 160 Tm () Tj
+ET
+endstream
+endobj
+12 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 1 0 R >> >> /Contents 11 0 R >>
+endobj
+13 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+xref
+0 14
+0000000000 65535 f 
+0000000009 00000 n 
+0000000079 00000 n 
+0000000162 00000 n 
+0000002585 00000 n 
+0000002711 00000 n 
+0000005101 00000 n 
+0000005227 00000 n 
+0000007574 00000 n 
+0000007700 00000 n 
+0000010088 00000 n 
+0000010215 00000 n 
+0000012329 00000 n 
+0000012457 00000 n 
+trailer
+<< /Size 14 /Root 13 0 R >>
+startxref
+12507
+%%EOF
